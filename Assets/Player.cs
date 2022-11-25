@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             AddHunger(1);
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
         {
             SubtractHunger(1);
         }
+        */
 
         float xDirection = Input.GetAxis("Horizontal");
         float zDirection = Input.GetAxis("Vertical");
@@ -36,8 +38,15 @@ public class Player : MonoBehaviour
         transform.position += moveDirection * speed;
 
     }
-
-    void AddHunger(int hunger)
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("edible"))
+        {
+            Destroy(collision.gameObject);
+            AddHunger(1);
+        }
+    }
+        void AddHunger(int hunger)
     {
         currentHunger += hunger;
         hungerBar.SetHunger(currentHunger);
