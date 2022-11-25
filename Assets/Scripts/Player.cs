@@ -20,17 +20,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            AddHunger(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            SubtractHunger(1);
-        }
-        */
 
         float xDirection = Input.GetAxis("Horizontal");
         float zDirection = Input.GetAxis("Vertical");
@@ -46,6 +35,12 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             AddHunger(1);
         }
+
+        if (collision.gameObject.CompareTag("toxic"))
+        {
+            Destroy(collision.gameObject);
+            restartLevel();
+        }
     }
 
     void AddHunger(int hunger)
@@ -54,7 +49,7 @@ public class Player : MonoBehaviour
         hungerBar.SetHunger(currentHunger);
         if(currentHunger == maxHunger)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            restartLevel(); 
         }
     }
 
@@ -62,6 +57,11 @@ public class Player : MonoBehaviour
     {
         currentHunger -= hunger;
         hungerBar.SetHunger(currentHunger);
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
 
