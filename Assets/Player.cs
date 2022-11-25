@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -46,10 +47,15 @@ public class Player : MonoBehaviour
             AddHunger(1);
         }
     }
-        void AddHunger(int hunger)
+
+    void AddHunger(int hunger)
     {
         currentHunger += hunger;
         hungerBar.SetHunger(currentHunger);
+        if(currentHunger == maxHunger)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     void SubtractHunger(int hunger)
