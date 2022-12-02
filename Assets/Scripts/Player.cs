@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    public int maxHunger = 5;
-    public int currentHunger;
-
     public HungerBar hungerBar;
+    public int maxHunger = 3;
+    public int currentHunger;
     public float speed = .001f;
     public Transform cam;
     public float playerActivateDistance;
-    bool active = false;
     public GameObject level1Blocks;
     public GameObject level2Blocks;
     public GameObject level3Blocks;
+    [SerializeField] private bool triggerActive = false;
+    [SerializeField] private Collider triggered;
     void Start()
     {
         currentHunger = 0;
@@ -28,29 +28,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        active = Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out hit, playerActivateDistance);
-        //Debug.Log(active);
-        if(Input.GetKeyDown(KeyCode.E) && active == true)
+        if (triggerActive && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("active is true");
-            if(hit.transform.CompareTag("edible"))
+            if(triggered != null)
             {
-                Debug.Log("hit");
-                Destroy(hit.collider.gameObject);
-                AddHunger(1);
+                SomeCoolAction(triggered);
             }
+            
+            
+        }
 
-            if (hit.transform.CompareTag("toxic"))
-            {
-                Destroy(hit.collider.gameObject);
-                RestartLevel();
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("hey");
-        }
         float xDirection = Input.GetAxis("Horizontal");
         float zDirection = Input.GetAxis("Vertical");
 
@@ -60,47 +47,73 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("edible"))
+        if (collision.CompareTag("edible"))
         {
-            Debug.Log("in there");
-            // Destroy(collision.gameObject);
-            // AddHunger(1);
+            triggerActive = true;
+            triggered = collision;
+        }
+        if (collision.CompareTag("toxic"))
+        {
+            triggerActive = true;
+            triggered = collision;
         }
         if (collision.gameObject.CompareTag("level1Goal"))
         {
-            //RestartLevel();
             transform.position = new Vector3(3.81f, 2.1f, 4.07f);
             level1Blocks.SetActive(false);
             level2Blocks.SetActive(true);
+            hungerBar.SetHunger(0);
+            currentHunger = 0;
         }
         if (collision.gameObject.CompareTag("level2Goal"))
         {
             transform.position = new Vector3(3.81f, 2.1f, 4.07f);
             level2Blocks.SetActive(false);
             level3Blocks.SetActive(true);
+            hungerBar.SetHunger(0);
+            currentHunger = 0;
         }
         if (collision.gameObject.CompareTag("level3Goal"))
         {
             transform.position = new Vector3(3.81f, 2.1f, 4.07f);
             level2Blocks.SetActive(false);
             level3Blocks.SetActive(true);
+            hungerBar.SetHunger(0);
+            currentHunger = 0;
         }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("edible"))
+        {
+            triggerActive = false;
+        }
+    }
+
+    public void SomeCoolAction(Collider collision)
+    {
+        if(collision.CompareTag("edible"))
+        {
+            Destroy(collision.gameObject);
+            AddHunger(1);
+        }
+        if (collision.CompareTag("toxic"))
+        {
+            RestartLevel();
+            
+        }
+        triggered = null;
     }
 
     void AddHunger(int hunger)
     {
         currentHunger += hunger;
         hungerBar.SetHunger(currentHunger);
-        if(currentHunger == maxHunger)
+        if (currentHunger == maxHunger)
         {
-            RestartLevel(); 
+            RestartLevel();
         }
-    }
-
-    void SubtractHunger(int hunger)
-    {
-        currentHunger -= hunger;
-        hungerBar.SetHunger(currentHunger);
     }
 
     public void RestartLevel()

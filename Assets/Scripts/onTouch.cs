@@ -4,34 +4,53 @@ using UnityEngine;
 
 public class onTouch : MonoBehaviour
 {
-    [SerializeField] private bool triggerActive = false;
-
-    public void OnTriggerEnter(Collider other)
+    //[SerializeField] private bool triggerActive = false;
+    //public HungerBar hungerBar;
+    //public int maxHunger = 3;
+    //public int currentHunger;
+    void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            triggerActive = true;
-        }
+        //currentHunger = 0;
+        //hungerBar.SetMaxHunger(maxHunger);
     }
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        triggerActive = true;
+    //    }
+    //}
 
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            triggerActive = false;
-        }
-    }
+    //public void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        triggerActive = false;
+    //    }
+    //}
 
-    private void Update()
-    {
-        if (triggerActive && Input.GetKeyDown(KeyCode.E))
-        {
-            SomeCoolAction();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (triggerActive && Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        SomeCoolAction();
+    //    }
+    //}
 
-    public void SomeCoolAction()
-    {   
-        Destroy(gameObject);
-    }
+    //public void SomeCoolAction()
+    //{
+    //    Destroy(gameObject);
+    //    AddHunger(1);
+    //}
+
+    //void AddHunger(int hunger)
+    //{
+    //    Debug.Log(currentHunger);
+    //    currentHunger += hunger;
+    //    hungerBar.SetHunger(currentHunger);
+    //    if (currentHunger == maxHunger)
+    //    {
+    //        //RestartLevel();
+    //    }
+    //}
 }
