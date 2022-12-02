@@ -77,11 +77,13 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("level2Goal"))
         {
+            transform.position = new Vector3(3.81f, 2.1f, 4.07f);
             level2Blocks.SetActive(false);
             level3Blocks.SetActive(true);
         }
         if (collision.gameObject.CompareTag("level3Goal"))
         {
+            transform.position = new Vector3(3.81f, 2.1f, 4.07f);
             level2Blocks.SetActive(false);
             level3Blocks.SetActive(true);
         }
