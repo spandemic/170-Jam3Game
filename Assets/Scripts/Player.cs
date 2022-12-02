@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public GameObject level1Blocks;
     public GameObject level2Blocks;
     public GameObject level3Blocks;
+    public GameObject winObject;
     [SerializeField] private bool triggerActive = false;
     [SerializeField] private Collider triggered;
     void Start()
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
         level1Blocks.SetActive(true);
         level2Blocks.SetActive(false);
         level3Blocks.SetActive(false);
+        winObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -80,6 +82,7 @@ public class Player : MonoBehaviour
             level3Blocks.SetActive(true);
             hungerBar.SetHunger(0);
             currentHunger = 0;
+            winObject.SetActive(true);
         }
     }
 
