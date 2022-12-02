@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public HungerBar hungerBar;
     public int maxHunger = 3;
     public int currentHunger;
-    public float speed = .001f;
+    public float speed = .0005f;
     public Transform cam;
     public float playerActivateDistance;
     public GameObject level1Blocks;
