@@ -24,8 +24,10 @@ public class Player : MonoBehaviour
     {
         RaycastHit hit;
         active = Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out hit, playerActivateDistance);
+        //Debug.Log(active);
         if(Input.GetKeyDown(KeyCode.E) && active == true)
         {
+            Debug.Log("active is true");
             if(hit.transform.CompareTag("edible"))
             {
                 Debug.Log("hit");
@@ -39,6 +41,10 @@ public class Player : MonoBehaviour
                 restartLevel();
             }
         }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("hey");
+        }
         float xDirection = Input.GetAxis("Horizontal");
         float zDirection = Input.GetAxis("Vertical");
 
@@ -50,6 +56,12 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+        if (collision.gameObject.CompareTag("edible"))
+        {
+            Debug.Log("in there");
+            Destroy(collision.gameObject);
+            AddHunger(1);
+        }
         /*
         if (collision.gameObject.CompareTag("edible"))
         {
