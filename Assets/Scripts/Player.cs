@@ -10,14 +10,20 @@ public class Player : MonoBehaviour
     public int currentHunger;
 
     public HungerBar hungerBar;
-    public float speed = .1f;
+    public float speed = .01f;
     public Transform cam;
     public float playerActivateDistance;
     bool active = false;
+    public GameObject level1Blocks;
+    public GameObject level2Blocks;
+    public GameObject level3Blocks;
     void Start()
     {
         currentHunger = 0;
         hungerBar.SetMaxHunger(maxHunger);
+        level1Blocks.SetActive(true);
+        level2Blocks.SetActive(false);
+        level3Blocks.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -38,7 +44,7 @@ public class Player : MonoBehaviour
             if (hit.transform.CompareTag("toxic"))
             {
                 Destroy(hit.collider.gameObject);
-                restartLevel();
+                RestartLevel();
             }
         }
         if(Input.GetKeyDown(KeyCode.E))
@@ -62,20 +68,23 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             AddHunger(1);
         }
-        /*
-        if (collision.gameObject.CompareTag("edible"))
+        if (collision.gameObject.CompareTag("level1Goal"))
         {
-            Destroy(collision.gameObject);
-            AddHunger(1);
+            //RestartLevel();
+            transform.position = new Vector3(3.81f, 2.1f, 4.07f);
+            level1Blocks.SetActive(false);
+            level2Blocks.SetActive(true);
         }
-        
-
-        if (collision.gameObject.CompareTag("toxic"))
+        if (collision.gameObject.CompareTag("level2Goal"))
         {
-            Destroy(collision.gameObject);
-            restartLevel();
+            level2Blocks.SetActive(false);
+            level3Blocks.SetActive(true);
         }
-        */
+        if (collision.gameObject.CompareTag("level3Goal"))
+        {
+            level2Blocks.SetActive(false);
+            level3Blocks.SetActive(true);
+        }
     }
 
     void AddHunger(int hunger)
@@ -84,7 +93,7 @@ public class Player : MonoBehaviour
         hungerBar.SetHunger(currentHunger);
         if(currentHunger == maxHunger)
         {
-            restartLevel(); 
+            RestartLevel(); 
         }
     }
 
@@ -94,7 +103,7 @@ public class Player : MonoBehaviour
         hungerBar.SetHunger(currentHunger);
     }
 
-    public void restartLevel()
+    public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
