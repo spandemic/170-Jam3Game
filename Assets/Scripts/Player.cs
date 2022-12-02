@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public int currentHunger;
 
     public HungerBar hungerBar;
-    public float speed = .01f;
+    public float speed = .001f;
     public Transform cam;
     public float playerActivateDistance;
     bool active = false;
@@ -57,16 +57,14 @@ public class Player : MonoBehaviour
         Vector3 moveDirection = new Vector3(xDirection, 0.0f, zDirection);
         transform.position += moveDirection * speed;
 
-
-
     }
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("edible"))
         {
             Debug.Log("in there");
-            Destroy(collision.gameObject);
-            AddHunger(1);
+            // Destroy(collision.gameObject);
+            // AddHunger(1);
         }
         if (collision.gameObject.CompareTag("level1Goal"))
         {
