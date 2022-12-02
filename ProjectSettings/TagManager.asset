@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - inedible
+  - edible
+  - toxic
+  - CinemachineTarget
+  - level1
+  - level2
+  - level3
+  - level1Goal
+  - level2Goal
+  - level3Goal
   layers:
   - Default
   - TransparentFX
