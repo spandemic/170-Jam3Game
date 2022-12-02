@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     public GameObject level3Blocks;
     public GameObject winObject;
     [SerializeField] private bool triggerActive = false;
+    [SerializeField] private AudioSource audioPlayer;
+    [SerializeField] private AudioClip eatSFX;
+    [SerializeField] private AudioClip burpSFX;
     [SerializeField] private Collider triggered;
     void Start()
     {
@@ -99,10 +102,12 @@ public class Player : MonoBehaviour
         if(collision.CompareTag("edible"))
         {
             Destroy(collision.gameObject);
+            audioPlayer.PlayOneShot(eatSFX);
             AddHunger(1);
         }
         if (collision.CompareTag("toxic"))
         {
+            audioPlayer.PlayOneShot(burpSFX);
             RestartLevel();
             
         }
